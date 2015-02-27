@@ -1,4 +1,13 @@
 <?php
+
+function __autoload($className) {
+    require_once dirname(__DIR__) . '/src/' . str_replace("\\", "/", $className) . '.php';
+}
+
+use \RogerioLino\Captcha as Captcha;
+
+
+
 $renderers = array('gd', 'svg', 'text');
 $captchas = array('math', 'text');
 
@@ -55,11 +64,10 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             <div class="form">
                 <h3>Form validation:</h3>
                 <?php 
-                    require('../captcha.php');
 
                     $message = '';
                     if (!empty($_POST)) {
-                        $cform = CaptchaForm::restore();
+                        $cform = Captcha\CaptchaForm::restore();
                         if ($cform->match()) {
                             $message = '<span class="message success">Success</span>';
                         } else {
@@ -67,25 +75,25 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                         }    
                     }
 
-                    $cform = new CaptchaForm();
+                    $cform = new Captcha\CaptchaForm();
                     switch ($captcha) {
                     case 'math':
-                        $cform->setCaptcha(new MathCaptcha());
+                        $cform->setCaptcha(new Captcha\MathCaptcha());
                         break;
                     case 'text':
-                        $cform->setCaptcha(new TextCaptcha());
+                        $cform->setCaptcha(new Captcha\TextCaptcha());
                         break;
                     }
                     // renderer choosed
                     switch ($renderer) {
                     case 'gd':
-                        $cform->setRenderer(new GdCaptchaRenderer());
+                        $cform->setRenderer(new Captcha\GdCaptchaRenderer());
                         break;
                     case 'svg':
-                        $cform->setRenderer(new SvgCaptchaRenderer());
+                        $cform->setRenderer(new Captcha\SvgCaptchaRenderer());
                         break;
                     case 'text':
-                        $cform->setRenderer(new PlainTextCaptchaRenderer());
+                        $cform->setRenderer(new Captcha\PlainTextCaptchaRenderer());
                         break;
                     }
                     

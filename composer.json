@@ -1,0 +1,24 @@
+{
+    "name": "rogeriolino/captcha",
+    "type": "library",
+    "description": "PHP captcha generator",
+    "keywords": ["captcha", "gd", "image", "text", "svg"],
+    "homepage": "https://github.com/rogeriolino/php-captcha",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rogério Alencar Lino Filho", 
+            "email": "rogeriolino@gmail.com",
+            "homepage": "http://rogeriolino.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "RogerioLino\\Captcha": "src/"
+        }
+    }
+}
