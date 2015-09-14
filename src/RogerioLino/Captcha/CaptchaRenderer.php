@@ -3,13 +3,11 @@
 namespace RogerioLino\Captcha;
 
 /**
- * Captcha Renderer interface
+ * Captcha Renderer interface.
  *
  * @author Rogério Lino <rogeriolino.com>
  */
-interface CaptchaRenderer 
+interface CaptchaRenderer
 {
-    
     public function render(Captcha $c);
-
 }
