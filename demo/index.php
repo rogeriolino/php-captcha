@@ -1,25 +1,26 @@
 <?php
 
-function __autoload($className) {
-    require_once dirname(__DIR__) . '/src/' . str_replace("\\", "/", $className) . '.php';
+function __autoload($className)
+{
+    require_once dirname(__DIR__).'/src/'.str_replace('\\', '/', $className).'.php';
 }
 
 use \RogerioLino\Captcha as Captcha;
 
+$renderers = ['gd', 'svg', 'text'];
+$captchas = ['math', 'text'];
 
-
-$renderers = array('gd', 'svg', 'text');
-$captchas = array('math', 'text');
-
-function get($key, $arr) {
+function get($key, $arr)
+{
     $v = isset($_GET[$key]) ? $_GET[$key] : $arr[0];
+
     return isset($arr[$v]) ? $arr[$v] : $v;
 }
 
 $renderer = get('r', $renderers);
 $captcha = get('c', $captchas);
 
-$url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,7 +44,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                     <?php foreach ($captchas as $c): ?>
                     <li>
                         <label for="<?php echo $c ?>"><?php echo $c ?></label>
-                        <input id="<?php echo $c ?>" type="radio" name="c" value="<?php echo $c ?>" <?php echo ($captcha == $c ? 'checked="checked"' : '') ?> onclick="this.form.submit()" />
+                        <input id="<?php echo $c ?>" type="radio" name="c" value="<?php echo $c ?>" <?php echo($captcha == $c ? 'checked="checked"' : '') ?> onclick="this.form.submit()" />
                     </li>
                     <?php endforeach; ?>
                 </ul>
@@ -54,7 +55,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                     <?php foreach ($renderers as $r): ?>
                     <li>
                         <label for="<?php echo $r ?>"><?php echo $r ?></label>
-                        <input id="<?php echo $r ?>" type="radio" name="r" value="<?php echo $r; ?>" <?php echo ($renderer == $r ? 'checked="checked"' : ''); ?> onclick="this.form.submit()" />
+                        <input id="<?php echo $r ?>" type="radio" name="r" value="<?php echo $r; ?>" <?php echo($renderer == $r ? 'checked="checked"' : ''); ?> onclick="this.form.submit()" />
                     </li>
                     <?php endforeach; ?>
                 </ul>
@@ -72,7 +73,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                             $message = '<span class="message success">Success</span>';
                         } else {
                             $message = '<span class="message fail">Fail</span>';
-                        }    
+                        }
                     }
 
                     $cform = new Captcha\CaptchaForm();
@@ -96,9 +97,9 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                         $cform->setRenderer(new Captcha\PlainTextCaptchaRenderer());
                         break;
                     }
-                    
+
                     $cform->getCaptcha()->setCaseSensitive(false);
-                    
+
                     echo $cform->create();
                 ?>
                 <div>

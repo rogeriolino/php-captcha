@@ -3,15 +3,14 @@
 namespace RogerioLino\Captcha;
 
 /**
- * Plain text renderer
+ * Plain text renderer.
  *
  * @author Rogério Lino <rogeriolino.com>
  */
-class PlainTextCaptchaRenderer implements CaptchaRenderer 
+class PlainTextCaptchaRenderer implements CaptchaRenderer
 {
-
-    public function render(Captcha $c) {
+    public function render(Captcha $c)
+    {
         return $c->getGenerateValue();
     }
-
 }

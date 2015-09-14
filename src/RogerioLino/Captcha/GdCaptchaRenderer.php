@@ -3,24 +3,25 @@
 namespace RogerioLino\Captcha;
 
 /**
- * PHP GD Renderer (png format)
+ * PHP GD Renderer (png format).
  *
  * @author Rogério Lino <rogeriolino.com>
  */
-class GdCaptchaRenderer extends AbstractImageCaptchaRenderer 
+class GdCaptchaRenderer extends AbstractImageCaptchaRenderer
 {
-
     private $font = '/fonts/DroidSans.ttf';
 
-    public function __construct() {
+    public function __construct()
+    {
         // checking gd
         if (!extension_loaded('gd') || !function_exists('gd_info')) {
             throw new Exception('PHP Gd library not found');
         }
-        $this->font = __DIR__ . $this->font;
+        $this->font = __DIR__.$this->font;
     }
 
-    public function encodeImage(ImageCaptcha $ci) {
+    public function encodeImage(ImageCaptcha $ci)
+    {
         $w = $ci->getCaptcha()->getWidth();
         $h = $ci->getCaptcha()->getHeight();
         $image = imagecreatetruecolor($w, $h);
@@ -45,17 +46,16 @@ class GdCaptchaRenderer extends AbstractImageCaptchaRenderer
         }
         $temp = tempnam(sys_get_temp_dir(), 'captcha');
         imagepng($image, $temp);
-        $data = fread(fopen($temp, "r"), filesize($temp));
+        $data = fread(fopen($temp, 'r'), filesize($temp));
         $base64 = base64_encode($data);
         imagedestroy($image);
         unlink($temp);
-        return 'data:image/png;base64,' . $base64;
+
+        return 'data:image/png;base64,'.$base64;
     }
 
-    private function toHex($str) {
+    private function toHex($str)
+    {
         return str_replace('#', '0x', $str);
     }
-
 }
-
-
